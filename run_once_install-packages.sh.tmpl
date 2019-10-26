@@ -50,6 +50,37 @@ ttf-croscore
 ttf-opensans
 ttf-roboto
 "
+AURPACKAGES+="ttf-wps-fonts
+ttf-ms-fonts
+nerd-fonts-dejavu-complete
+"
+
+# Design and handwriting utilities
+PACKAGES+="gimp
+krita
+xournalpp
+calligra
+inkscape
+"
+
+# Audio utilities
+PACKAGES+="audacity
+lmms
+alsa-firmware
+alsa-oss
+alsa-utils
+pulseaudio
+pulseaudio-equalizer
+pulseaudio-alsa
+pulseaudio-equalizer-ladspa
+jack
+pulseaudio-jack
+pavucontrol
+"
+AURPACKAGES+="spotify
+blockify
+musixmatch-bin
+"
 
 # Text Editors
 PACKAGES+="neovim
@@ -66,6 +97,10 @@ nvidia-utils
 "
 #lib32-nvidia-utils
 
+fi
+
+if [[ "$(cat /etc/hostname)" == "deimos" ]]; then
+	AURPACKAGES+="kvkbd"
 fi
 
 su root -c "echo \"Installing packages...\" && \
@@ -91,20 +126,16 @@ if ! [ -x "$(command -v yay)" ]; then
 	popd
 fi
 
-AURPACKAGES="spotify
-polybar
+AURPACKAGES="polybar
 oh-my-zsh-git
 i3lock-color
 betterlockscreen
 osx-arc-shadow
 captain-frank-cursors-git
 rofimoji-git
-"
-
-# Fonts
-AURPACKAGES+="ttf-wps-fonts
-ttf-ms-fonts
-nerd-fonts-dejavu-complete
+i3-battery-popup-git
+discord
+pamac-aur
 "
 
 echo "Installing AUR packages..."
