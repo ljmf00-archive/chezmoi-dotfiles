@@ -35,6 +35,8 @@ xf86-video-intel
 xorg-fonts
 wayland
 vulkan-intel
+openssh
+thefuck
 "
 #lib32-virtualgl
 
@@ -143,6 +145,52 @@ echo "Installing AUR packages..."
 sudo -u luis yay -S $(echo $AURPACKAGES | tr -s '\n' ' ') --needed --noconfirm
 
 chsh -s /usr/bin/zsh "$(whoami)"
+
+#TODO: Remove this code duplication
+
+# ZSH Plugin: zsh-autosuggestions
+ZSH_PLUGIN_DIR="/home/$(whoami)/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+if [ -d "$ZSH_PLUGIN_DIR" ]; then
+	# Updating
+	echo "Updating zsh-autosuggestions plugin..."
+	pushd "$ZSH_PLUGIN_DIR"
+	git pull
+	popd
+else
+	# Installing
+	echo "Installing zsh-autosuggestions plugin..."
+	git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_PLUGIN_DIR"
+fi
+
+
+# ZSH Plugin: zsh-wakatime
+ZSH_PLUGIN_DIR="/home/$(whoami)/.oh-my-zsh/custom/plugins/zsh-wakatime"
+if [ -d "$ZSH_PLUGIN_DIR" ]; then
+	# Updating
+	echo "Updating zsh-wakatime plugin..."
+	pushd "$ZSH_PLUGIN_DIR"
+		git pull
+	popd
+else
+	# Installing
+	echo "\e[92m-->\e[0m \e[1mInstalling zsh-wakatime plugin..."
+	git clone https://github.com/wbingli/zsh-wakatime.git "$ZSH_PLUGIN_DIR"
+fi
+
+
+# ZSH Plugin: zsh-syntax-highlighting
+ZSH_PLUGIN_DIR="/home/$(whoami)/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+if [ -d "$ZSH_PLUGIN_DIR" ]; then
+	# Updating
+	echo "Updating zsh-syntax-highlighting plugin..."
+	pushd "$ZSH_PLUGIN_DIR"
+		git pull
+	popd
+else
+	# Installing
+	echo "Installing zsh-syntax-highlighting plugin..."
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_PLUGIN_DIR"
+fi
 
 sudo npm i -g i3-cycle-focus
 sudo systemctl enable lightdm
