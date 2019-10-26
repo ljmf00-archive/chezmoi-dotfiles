@@ -14,12 +14,16 @@ git
 base-devel
 npm
 nodejs
+feh
+nautilus
+speedcrunch
 "
 
 if [[ "$(cat /etc/hostname)" == "mars" ]]; then
 	PACKAGES+="nvidia
 nvidia-settings
 nvidia-utils
+oh-my-zsh-git
 "
 #lib32-nvidia-utils
 
