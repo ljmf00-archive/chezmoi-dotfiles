@@ -9,6 +9,7 @@ PACKAGES=""
 PACKAGES+="kitty
 lightdm
 lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
 networkmanager
 git
 base-devel
@@ -17,13 +18,50 @@ nodejs
 feh
 nautilus
 speedcrunch
+i3-gaps
+rofi
+xsel
+compton
+gtk3
+papirus-icon-theme
+xorg
+xorg-apps
+xf86-input-libinput
+xf86-video-intel
+xorg-fonts
+wayland
+lib32-virtualgl
+vulkan-intel
+"
+
+# Fonts
+PACKAGES+="ttf-inconsolata
+ttf-droid
+ttf-dejavu
+ttf-freefont
+ttf-liberation
+ttf-gentium
+ttf-ubuntu-font-family
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+ttf-croscore
+ttf-opensans
+ttf-roboto
+"
+
+# Text Editors
+PACKAGES+="neovim
+neovim-qt
+python-neovim
+emacs
+code
 "
 
 if [[ "$(cat /etc/hostname)" == "mars" ]]; then
 	PACKAGES+="nvidia
 nvidia-settings
 nvidia-utils
-oh-my-zsh-git
 "
 #lib32-nvidia-utils
 
@@ -53,7 +91,20 @@ if ! [ -x "$(command -v yay)" ]; then
 fi
 
 AURPACKAGES="spotify
-polybar"
+polybar
+oh-my-zsh-git
+i3lock-color
+betterlockscreen
+osx-arc-shadow
+captain-frank-cursors-git
+rofimoji-git
+"
+
+# Fonts
+AURPACKAGES+="ttf-wps-fonts
+ttf-ms-fonts
+nerd-fonts-dejavu-complete
+"
 
 echo "Installing AUR packages..."
 sudo -u luis yay -S $(echo $AURPACKAGES | tr -s '\n' ' ') --needed --noconfirm
