@@ -6,6 +6,7 @@ PACKAGES=""
 
 {{ if eq .chezmoi.os "linux" -}}
 
+#TODO: Run only on archlinux
 #TODO: Add multilib repo and colors to pacman
 
 PACKAGES+="kitty
@@ -114,7 +115,7 @@ echo \"$(whoami) ALL = NOPASSWD : ALL\" >> /etc/sudoers && \
 echo \"%wheel ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers
 "
 
-if ! [ -x "$(command -v yay)" ]; then
+if ! [ -x "/usr/bin/yay" ]; then
 	echo "Installing yay..."
 	pushd /tmp/
 		mkdir -p "/tmp/yay-install/"
