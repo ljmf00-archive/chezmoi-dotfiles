@@ -8,6 +8,7 @@ PACKAGES=""
 
 #TODO: Run only on archlinux
 #TODO: Add multilib repo and colors to pacman
+#TODO: Add system-dotfiles
 
 PACKAGES+="kitty
 lightdm
@@ -140,7 +141,11 @@ captain-frank-cursors-git
 i3-battery-popup-git
 discord
 pamac-aur
+slack-desktop
+zoom
 "
+
+#TODO: Make a diff to avoid already installed packages
 
 echo "Installing AUR packages..."
 sudo -u luis yay -S $(echo $AURPACKAGES | tr -s '\n' ' ') --needed --noconfirm
