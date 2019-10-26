@@ -4,7 +4,7 @@ set -e
 
 {{ if eq .chezmoi.os "linux" -}}
 
-ORPHANS="$(echo $(pacman -Qtdq)"
+ORPHANS="$(pacman -Qtdq)"
 if [ "$ORPHANS" == "" ]; then
 	DELETE_ORPHANS="echo No orphan packages"
 else
