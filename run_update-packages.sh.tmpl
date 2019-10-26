@@ -4,9 +4,9 @@ set -e
 
 {{ if eq .chezmoi.os "linux" -}}
 
-DELETE_ORPHANS="pacman -Rns $(pacman -Qtdq) --noconfirm"
+DELETE_ORPHANS="pacman -Rns $(echo $(pacman -Qtdq) | tr '\n' ' ') --noconfirm"
 
-if ! [ -x "$(command -v yay && command -v sudo)" ]; then
+if [[ ! -x "/usr/bin/yay" ]] || [[ ! -x "/usr/bin/sudo" ]]; then
 	echo "Updating packages using pacman..."
 	su root -c "pacman -Syu --noconfirm && \
 $DELETE_ORPHANS"
