@@ -141,6 +141,8 @@ pamac-aur
 echo "Installing AUR packages..."
 sudo -u luis yay -S $(echo $AURPACKAGES | tr -s '\n' ' ') --needed --noconfirm
 
+chsh -s /usr/bin/zsh "$(whoami)"
+
 sudo npm i -g i3-cycle-focus
 sudo systemctl enable lightdm
 
