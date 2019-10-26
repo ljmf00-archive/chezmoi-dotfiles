@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+{{ if eq .chezmoi.os "linux" -}}
+
+if ! [ -x "$(command -v yay)" ]; then
+	echo "Updating packages using pacman..."
+	su root -c "pacman -Syu --noconfirm"
+else
+	echo "Updating packages using yay..."
+	sudo -u "$(whoami)" -n yay -Syu --noconfirm
+fi
+
+{{ else if eq .chezmoi.os "darwin" -}}
+
+{{ end -}}

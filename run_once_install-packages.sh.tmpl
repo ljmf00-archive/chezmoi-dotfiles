@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+PACKAGES=""
+
+{{ if eq .chezmoi.os "linux" -}}
+
+PACKAGES+="kitty
+lightdm
+lightdm-gtk-greeter
+networkmanager
+git
+base-devel
+npm
+nodejs
+"
+
+if [[ "$(cat /etc/hostname)" == "mars" ]]; then
+	PACKAGES+="nvidia
+nvidia-settings
+nvidia-utils
+"
+#lib32-nvidia-utils
+
+fi
+
+su root -c "echo \"Installing packages...\" && \
+pacman -Syu --noconfirm && \
+pacman -Sy $(echo $PACKAGES | tr -s '\n' ' ') --needed --noconfirm && \
+echo \"Create temporary permissions for sudo...\" && \
+mv -f /etc/sudoers /etc/sudoers.bak && \
+echo \"root ALL=(ALL) ALL\" > /etc/sudoers && \
+echo \"$(whoami) ALL = NOPASSWD : ALL\" >> /etc/sudoers && \
+echo \"%wheel ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers
+"
+
+if ! [ -x "$(command -v yay)" ]; then
+	echo "Installing yay..."
+	pushd /tmp/
+		mkdir -p "/tmp/yay-install/"
+		pushd yay-install
+			sudo -u "$(whoami)" -n bash -c "curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=yay > PKGBUILD"
+			sudo -u "$(whoami)" -n makepkg -sicf --needed --noconfirm
+		popd
+
+		sudo rm -rf yay-install
+	popd
+fi
+
+AURPACKAGES="spotify
+polybar"
+
+echo "Installing AUR packages..."
+sudo -u luis yay -S $(echo $AURPACKAGES | tr -s '\n' ' ') --needed --noconfirm
+
+sudo npm i -g i3-cycle-focus
+sudo systemctl enable lightdm
+
+echo "Restore permissions for sudo"
+sudo mv -f /etc/sudoers.bak /etc/sudoers
+
+{{ else if eq .chezmoi.os "darwin" -}}
+
+{{ end -}}
