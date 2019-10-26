@@ -6,6 +6,8 @@ PACKAGES=""
 
 {{ if eq .chezmoi.os "linux" -}}
 
+#TODO: Add multilib repo and colors to pacman
+
 PACKAGES+="kitty
 lightdm
 lightdm-gtk-greeter
@@ -30,9 +32,9 @@ xf86-input-libinput
 xf86-video-intel
 xorg-fonts
 wayland
-lib32-virtualgl
 vulkan-intel
 "
+#lib32-virtualgl
 
 # Fonts
 PACKAGES+="ttf-inconsolata
@@ -40,7 +42,6 @@ ttf-droid
 ttf-dejavu
 ttf-freefont
 ttf-liberation
-ttf-gentium
 ttf-ubuntu-font-family
 noto-fonts
 noto-fonts-cjk
