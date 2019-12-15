@@ -41,8 +41,35 @@ thefuck
 firefox
 scrot
 filezilla
+clipmenu
+polkit-gnome
+xss-lock
+xautolock
+pkgfile
+evolution
+xclip
+polkit-gnome
+dunst
 "
 #lib32-virtualgl
+
+#TODO: Check for intel graphics
+#lspci | grep "VGA compatible controller: Intel Corporation" | wc -l
+
+AURPACKAGES="polybar
+oh-my-zsh-git
+i3lock-color
+betterlockscreen
+osx-arc-shadow
+captain-frank-cursors-git
+i3-battery-popup-git
+pamac-aur
+fluxgui
+plymouth
+"
+#discord
+#slack-desktop
+#zoom
 
 # Fonts
 PACKAGES+="ttf-inconsolata
@@ -65,16 +92,14 @@ nerd-fonts-dejavu-complete
 
 # Design and handwriting utilities
 PACKAGES+="gimp
-krita
-xournalpp
-calligra
 inkscape
 "
+#xournalpp
+#calligra
+#krita
 
 # Audio utilities
-PACKAGES+="audacity
-lmms
-alsa-firmware
+PACKAGES+="alsa-firmware
 alsa-oss
 alsa-utils
 pulseaudio
@@ -85,6 +110,9 @@ jack
 pulseaudio-jack
 pavucontrol
 "
+#audacity
+#lmms
+
 AURPACKAGES+="spotify
 blockify
 musixmatch-bin
@@ -94,9 +122,9 @@ musixmatch-bin
 PACKAGES+="neovim
 neovim-qt
 python-neovim
-emacs
 code
 "
+#emacs
 
 if [[ "$(cat /etc/hostname)" == "mars" ]]; then
 	PACKAGES+="nvidia
@@ -121,6 +149,13 @@ echo \"$(whoami) ALL = NOPASSWD : ALL\" >> /etc/sudoers && \
 echo \"%wheel ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers
 "
 
+function sudo_finish {
+	echo "Restore permissions for sudo"
+	sudo mv -f /etc/sudoers.bak /etc/sudoers
+}
+trap sudo_finish EXIT
+
+
 if ! [ -x "/usr/bin/yay" ]; then
 	echo "Installing yay..."
 	pushd /tmp/
@@ -133,19 +168,6 @@ if ! [ -x "/usr/bin/yay" ]; then
 		sudo rm -rf yay-install
 	popd
 fi
-
-AURPACKAGES="polybar
-oh-my-zsh-git
-i3lock-color
-betterlockscreen
-osx-arc-shadow
-captain-frank-cursors-git
-i3-battery-popup-git
-discord
-pamac-aur
-slack-desktop
-zoom
-"
 
 #TODO: Make a diff to avoid already installed packages
 
@@ -203,10 +225,7 @@ fi
 bash -c "curl https://gitlab.com/aurorafossorg/utils/supershell/raw/master/supershell.sh > /home/$(whoami)/supershell.sh"
 
 sudo npm i -g i3-cycle-focus
-sudo systemctl enable lightdm
-
-echo "Restore permissions for sudo"
-sudo mv -f /etc/sudoers.bak /etc/sudoers
+sudo systemctl enable lightdm-plymouth
 
 {{ else if eq .chezmoi.os "darwin" -}}
 
